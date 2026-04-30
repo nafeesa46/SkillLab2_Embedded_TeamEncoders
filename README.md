@@ -3,7 +3,7 @@
 ## Final Project README
 
 > **Project Weight:** 100%  
-> **Team Size:** 4/3 students  
+> **Team Size:** 4 students  
 > **Project Duration:** 16 hours  
 > **Total Time Available:** 32 effort-hours per team  
 > **Project Type:** Playful, interactive, technology-based experience
@@ -57,26 +57,28 @@ By the final review, this README should clearly show:
 
 ## 1.1 Studio / Group Name
 
-`Project^2`
+`Team Encoders`
 
 ## 1.2 Team Members
 
 | Name                  | Primary Role                    | Secondary Role   | Strengths Brought to the Project |
 | --------------        | ------------------------------- | --------------   | -------------------------------- |
-| `Mrugendra Vasmatkar` | `[Electronics / Coding / App ]` | `Documentation`  | `Documentation, Gift of Gab `|
-| `Jyoti Bagate`        | `[Electronics / Fabrication]`   | `[Coding]`       | `Material Handling, Hardware`    |
+| `Vijay Prabhu` | `[Electronics / Designing ]` | `[Research]`  | `Hardware`|
+| `Parth Bhosale`        | `[Electronics / Designing]`   | `[Coding]`       | `Hardware`    |
+| `Kushith Shetty`        | `[Software/Simulation]`   | `[Coding]`       | `Software`    |
+| `Nafeesa Memon`        | `[Software/Documentation]`   | `[Research]`       | `Software`    |
 
 ## 1.3 Project Title
 
-`"Project Project"`
+`"FPGA-Based Robotic Navigation using CORDIC Algorithm"`
 
-`(because Project-or)`
+
 
 <img width="1600" height="1131" alt="image" src="https://github.com/user-attachments/assets/c64bfbd4-b3b7-43d9-83ad-c203a5aa11bc" />
 
 ## 1.4 One-Line Pitch
 
-`A projected, fully customizable time portal where engineering education is done through PUBG battlefield in the comfort of our home`
+`A real-time robotic navigation system that computes direction and distance using FPGA-accelerated CORDIC instead of traditional CPU-based math.`
 
 ## 1.5 Expanded Project Idea
 
@@ -87,7 +89,9 @@ In 1–2 paragraphs, explain:
 - what technologies are involved.
 
 **Response:**  
-`A projected and fully customizable time portal can transform engineering education into an immersive PUBG-style battlefield experience from the comfort of home. In this environment, students can learn engineering concepts by entering a virtual battlefield where challenges, obstacles, and missions are designed around real technical problems. Instead of passively studying theory, learners actively apply concepts such as electronics, coding, sensors, robotics, mechanics, and system design to complete missions, solve problems, and progress through different levels. This approach makes engineering education more interactive, engaging, and practical by combining gaming, simulation, and hands-on problem-solving in a familiar and exciting format.`
+`This project presents a hardware-accelerated robotic navigation system implemented on FPGA using the CORDIC (Coordinate Rotation Digital Computer) algorithm. The system computes direction and distance between a robot’s current position and a target location in real time using only shift-add operations, eliminating the need for multipliers and floating-point computation.
+
+A complementary software simulation environment was developed using JavaScript to validate the algorithmic behavior and visualize navigation on a Cartesian grid. The system continuously calculates displacement, converts it into polar coordinates using CORDIC, and updates the robot’s position iteratively until the destination is reached. This approach demonstrates how computationally intensive mathematical operations can be efficiently mapped to hardware for deterministic and low-latency performance.`
 
 ---
 
@@ -108,7 +112,15 @@ List what inspired the project.
 What makes your project original?
 
 **Response:**  
+Unlike conventional robotic navigation systems that rely on CPUs or microcontrollers for trigonometric computations, this project offloads all critical mathematical operations to FPGA hardware using the CORDIC algorithm.
 
+Additionally, the project integrates:
+
+A hardware-software co-design approach
+A real-time visualization interface
+Error comparison between software math and FPGA-equivalent computation
+
+This combination of FPGA acceleration with interactive simulation makes the system both technically efficient and conceptually demonstrative.
 
 ---
 
@@ -118,7 +130,14 @@ What makes your project original?
 
 Describe exactly how a user will use the project.Make it a story
 **Response:**  
+The user interacts with the system through a simulation interface. They input the current position (x,y) and displacement (dx,dy). Once the simulation is triggered, the system visually plots the current and target positions on a grid.
 
+Internally, the system computes direction and distance using both:
+
+~standard mathematical functions (software), and
+~CORDIC-based iterative computation (hardware equivalent)
+
+The computed path is displayed as a vector, and the robot’s movement is simulated step-by-step. The interface also shows numerical outputs such as distance, angle, and error metrics, allowing the user to understand both the navigation process and the accuracy of the CORDIC algorithm.
                                                   |
 
 
@@ -136,12 +155,22 @@ Describe exactly how a user will use the project.Make it a story
 What is the smallest version of this project that still delivers the core experience?
 
 **Response:**  
-
+The minimum usable version of the project includes:
+~Input of current and target coordinates
+~Computation of displacement vector (dx, dy)
+~CORDIC-based calculation of angle and distance
+~Basic visualization of movement on a grid
+~Display of numerical outputs
+This version demonstrates the core concept of FPGA-based navigation computation.
 
 ## 4.3 Stretch Features
 
 What features are nice to have but not essential?
 
+~Closed-loop navigation system
+~Sensor integration (IMU / encoders)
+~Obstacle detection and avoidance
+~Autonomous path planning
 
 ---
 
@@ -155,25 +184,25 @@ Check all that apply.
 
 - [ ] Mechanical
 
-- [x] Sensor-based
+- [ ] Sensor-based
 
-- [x] App-connected
+- [ ] App-connected
 
-- [x] Motorized
+- [ ] Motorized
 
 - [ ] Sound-based
 
-- [x] Light-based
+- [ ] Light-based
 
 - [x] Screen/UI-based
 
 - [x] Fabricated structure
 
-- [x] Game logic based
+- [ ] Game logic based
 
-- [x] Installation
+- [ ] Installation
 
-- [ ] Other:
+- [x] Other:
 
 ## 5.2 High-Level System Description
 
@@ -181,17 +210,32 @@ Explain how the system works in simple terms.
 
 Include:
 
-- input,
+- input
 - processing,
 - output,
 - physical structure,
 - app interaction if any.
 
 **Response:**  
+- Input      - Robot’s current position and a target position
+- Processing - A displacement vector is generated using subtractor logic. This vector is then processed using a CORDIC module configured                 in vectoring mode to compute distance and direction.The computed angle is further used in a second CORDIC module (rotation                mode) to generate cosine and sine values. These values are scaled using a velocity factor and added to the current                        position to generate the next position.
+- Output     - This process is repeated iteratively until the robot reaches the target.
+- Physical
+  structure  - The system is implemented in FPGA hardware.
+- App
+  interaction- A software simulation replicates the same logic for validation and visualizatio
 
 ## 5.3 Input / Output Map
+| System Part            | Type       | What It Does                                      |
+|:-----------------------|:----------:|--------------------------------------------------:|
+| Position Input         | Input      | Takes current (x, y) and target coordinates       |
+| Subtractor Block       | Processing | Computes dx, dy                                   |
+| CORDIC (Vectoring)     | Processing | Computes angle and distance                       |
+| CORDIC (Rotation)      | Processing | Computes sin and cos                              |
+| Update Logic           | Processing | Calculates next position                          |
+| Comparator             | Processing | Checks if target is reached                       |
+| Visualization UI       | Output     | Displays path, angle, distance, error             |
 
-| System Part                              | Type            | What It Does                                                               |
 
 
 ---
@@ -256,12 +300,12 @@ Add a sketch with labels showing:
 
 Describe the main electrical connections.
 
-**sample Response:**  
-`The RASPI is connected to the motor driver (L298N) using four GPIO pins (18,19; 22,23) to control motor direction (IN1, IN2, IN3, IN4). Two PWM-capable pins (ENA and ENB; 25 and 26) are connected to control the speed of each motor.
+**Response:**  
+`The FPGA (Xilinx-based platform) acts as the central processing unit. The system includes two CORDIC IP cores connected via AXI-Stream interfaces. Input coordinates are provided through registers or VIO (Virtual Input Output) for testing purposes.
 
-The motors are connected to the output terminals of the motor driver. The motor driver is powered directly by the battery pack (higher voltage), while the ESP32 receives regulated 5V from the buck converter.
+The subtractor modules compute dx and dy, which are fed into the first CORDIC block configured in vectoring mode. The output angle is passed to the second CORDIC block configured in rotation mode.
 
-All components share a common ground to ensure stable operation. The projector and camera are connected to the laptop, which handles tracking and game logic separately.`
+The outputs (cosθ, sinθ) are scaled and used to update position registers. All modules are synchronized using a system clock generated by a clock wizard. Proper valid/ready handshaking ensures correct data flow across pipeline stages..`
 
 ## 7.3 Circuit Diagram/architecture diagram
 
@@ -289,10 +333,10 @@ Insert a hand-drawn or software-made circuit diagram.
 
 | Tool / Platform                | Purpose                                        |
 | ------------------------------ | ---------------------------------------------- |
-| `[MicroPython]`                | `Control ESP32`                                |
-| `[Python/PyGame/OpenCV]`       | `Track markers, game logic, create projection` |
-| `[Fusion/Blender/Illustrator]` | `[Prototyping structure]`                      |
-|                                |                                                |
+| `[Xilinx Vivado]`              | `[FPGA design and CORDIC IP integration]`      |
+| `[JavaScript (HTML/CSS)]`      | `[Simulation and visualization]`               |
+| `[CORDIC JS Model]`            | `[FPGA-equivalent computation]`                |
+| `[CORDIC JS Model]`            | `[Real-time debugging]`                        |
 
 ## 8.2 Software Logic/Algorithm
 
