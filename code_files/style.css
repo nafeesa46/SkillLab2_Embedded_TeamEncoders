@@ -1,0 +1,274 @@
+:root {
+    --bg-color: #0b0e14;
+    --panel-bg: rgba(255, 255, 255, 0.05);
+    --accent-color: #00f2ff;
+    --primary-blue: #3b82f6;
+    --primary-green: #10b981;
+    --primary-red: #ef4444;
+    --text-main: #e2e8f0;
+    --text-muted: #94a3b8;
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --grid-line: #a0c4ff;
+    --plot-bg: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    overflow: hidden;
+    height: 100vh;
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 20px;
+    gap: 20px;
+}
+
+/* Glassmorphism Panels */
+.glass-panel, .glass-header, .glass-footer {
+    background: var(--panel-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 20px;
+}
+
+.glass-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.accent { color: var(--accent-color); text-shadow: 0 0 10px rgba(0, 242, 255, 0.5); }
+
+/* Layout */
+.grid-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr 320px;
+    gap: 20px;
+    flex-grow: 1;
+}
+
+/* Plot Area with Axes */
+.plot-area {
+    display: grid;
+    grid-template-columns: 60px 800px;
+    grid-template-rows: 800px 60px;
+    gap: 0;
+    padding: 10px;
+    margin: 0 auto;
+    width: fit-content;
+}
+
+.grid-wrapper {
+    grid-column: 2;
+    grid-row: 1;
+    position: relative;
+    border: 2px solid #1a365d;
+    background-color: #ffffff !important; /* Force white background */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    overflow: hidden;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    height: 100%;
+    width: 100%;
+    position: relative;
+    background: transparent;
+}
+
+.axis {
+    display: grid;
+    font-size: 15px; /* Slightly larger labels */
+    color: var(--text-main);
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.y-axis {
+    grid-column: 1;
+    grid-row: 1;
+    grid-template-rows: repeat(6, 1fr);
+    align-items: center;
+    justify-items: end;
+    padding-right: 15px;
+}
+
+.x-axis {
+    grid-column: 2;
+    grid-row: 2;
+    grid-template-columns: repeat(6, 1fr);
+    align-items: start;
+    justify-items: center;
+    padding-top: 15px;
+}
+
+.grid-cell {
+    border: 0.5px solid #2b6cb044;
+}
+
+.grid-cell.active-path {
+    background: rgba(239, 68, 68, 0.1);
+}
+
+.point {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 10;
+    border: 3px solid #ffffff; /* Thicker border for visibility */
+}
+
+.point.current { background: var(--primary-blue); box-shadow: 0 0 15px var(--primary-blue); }
+.point.predicted { background: var(--primary-green); box-shadow: 0 0 15px var(--primary-green); }
+
+/* Path Drawing */
+.path-line {
+    position: absolute;
+    height: 2px;
+    background: var(--primary-red);
+    transform-origin: 0 0;
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+/* Sidebar Flow */
+.block-flow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.flow-item {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    text-align: center;
+    font-size: 14px;
+    transition: all 0.3s;
+}
+
+.flow-item.active {
+    background: rgba(59, 130, 246, 0.2);
+    border-color: var(--primary-blue);
+    color: var(--primary-blue);
+}
+
+/* Input Section */
+.input-section {
+    margin-bottom: 30px;
+}
+
+.input-group {
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.field {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.field label {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.field input {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--glass-border);
+    border-radius: 6px;
+    padding: 10px;
+    color: white;
+    font-family: 'JetBrains Mono', monospace;
+    width: 100%;
+    min-width: 60px;
+}
+
+.field input:focus {
+    border-color: var(--primary-blue);
+    outline: none;
+}
+
+.info-note {
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(59, 130, 246, 0.1);
+    border-radius: 10px;
+    font-size: 13px;
+    color: var(--text-muted);
+    border-left: 3px solid var(--primary-blue);
+}
+
+.primary-btn:hover { background: #2563eb; transform: translateY(-2px); }
+
+/* Math & Analytics */
+.math-box {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.math-box.hardware { border-left: 4px solid var(--accent-color); }
+
+.result-row {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.result-row span:last-child { color: var(--accent-color); }
+
+.iteration-log {
+    height: 120px;
+    overflow-y: auto;
+    font-size: 11px;
+    margin-top: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-muted);
+}
+
+.metric-card {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    flex: 1;
+}
+
+.error-metrics { display: flex; gap: 10px; margin-top: 15px; }
+
+.small-text { font-size: 12px; color: var(--text-muted); margin-top: 5px; }
+
+.glass-footer { padding: 10px 20px; }
+.power-points { display: flex; justify-content: space-around; font-size: 12px; font-weight: 600; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 10px; }
