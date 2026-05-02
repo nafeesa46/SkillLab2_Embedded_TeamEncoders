@@ -241,7 +241,9 @@ Include:
 Add an early sketch of the full idea.
 
 **Insert image below:**  
-`[Upload image and link here]`
+<p align="center">
+  <img src="images/initial_mind_map.jpeg" width="700"/>
+</p>
 
 Example:
 
@@ -262,8 +264,10 @@ Add a sketch with labels showing:
 - output elements.
 
 **Insert image below:**  
-`[Upload image and link here]`
-<img width="1600" height="1200" alt="image" src="https://github.com/user-attachments/assets/95637f31-b4e7-4427-a9e1-4b63fbeb0ac5" />
+<p align="center">
+  <img src="images/flow_diagram_system.jpeg" width="700"/>
+</p>
+
 
 ## 6.3 Approximate Dimensions  (NOT APPLICABLE because we dont have a physical product, the algorithm is implemented on a boolean board)
 
@@ -309,8 +313,9 @@ The design follows a linear dataflow architecture with minimal control complexit
 Insert a hand-drawn or software-made circuit diagram.
 
 **Insert image below:**  
-`[Upload image and link here]`
-<img width="867" height="1156" alt="" src="" />
+<p align="center">
+  <img src="images/system_architecture.jpeg" width="700"/>
+</p>
 
 
 # 7.4. Power Plan
@@ -414,8 +419,9 @@ Suggested sequence:
 - error handling.
 
 **Insert image below:**  
-<img width="1600" height="1200" alt="image" src="" />
-<img width="1600" height="1200" alt="image" src="" />
+<p align="center">
+  <img src="images/flow_diagram_code_logic.jpeg" width="700"/>
+</p>
 
 
 
@@ -666,11 +672,21 @@ Suggested images:
 - mechanism test,
 - app screenshot,
 - final build.
-- <img width="960" height="1280" alt="WhatsApp Image 2026-04-24 at 9 46 02 AM (1)" src="https://github.com/user-attachments/assets/74baa570-5770-483e-be6d-d2f03386e37c" />
-
-
-
-
+- <p align="center">
+  <img src="images/initial_block_design.jpeg" width="700"/>
+</p> The first block design we made
+- <p align="center">
+  <img src="images/initial_simulation_demo.jpeg" width="700"/>
+</p> First software trial
+- <p align="center">
+  <img src="images/subtractor design.jpeg" width="700"/>
+</p> The subractor block we made to get started
+- <p align="center">
+  <img src="images/subtractor design.jpeg" width="700"/>
+</p> The subractor block we made to get started
+- <p align="center">
+  <img src="images/subtractor i_o.jpeg" width="700"/>
+</p> The subractor block virtual input output table
 
 # 17. Final Outcome
 
