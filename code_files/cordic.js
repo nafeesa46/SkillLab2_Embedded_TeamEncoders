@@ -13,24 +13,16 @@ class CORDIC {
     }
 
     /**
-     * Compute magnitude and angle using CORDIC vector mode
-     * @param {number} dx - change in x
-     * @param {number} dy - change in y
-     * @param {number} iterations - number of iterations
+     * Vector Mode: Compute magnitude and angle from dx, dy
      */
     calculate(dx, dy, iterations = 10) {
         let x = Math.abs(dx);
         let y = Math.abs(dy);
-        let z = 0; // Accumulated angle
-
+        let z = 0; 
         const steps = [];
 
         for (let i = 0; i < iterations; i++) {
             let x_new, y_new;
-            let di = y < 0 ? 1 : -1; // Vector mode: rotate y towards zero
-
-            // FPGA logic: x_new = x - di * (y >> i)
-            // y_new = y + di * (x >> i)
             const shiftY = y / Math.pow(2, i);
             const shiftX = x / Math.pow(2, i);
 
@@ -43,27 +35,58 @@ class CORDIC {
                 y_new = y + shiftX;
                 z -= this.atanLUT[i] || 0;
             }
-
-            x = x_new;
-            y = y_new;
-
-            steps.push({ iter: i, x: x.toFixed(4), y: y.toFixed(4), angle: z.toFixed(2) });
+            x = x_new; y = y_new;
+            steps.push({ iter: i, x: x.toFixed(2), y: y.toFixed(2), angle: z.toFixed(2) });
         }
 
-        // Apply gain to get final magnitude
         let magnitude = x * this.K;
-        
-        // Handle quadrant corrections
         let finalAngle = z;
         if (dx < 0 && dy >= 0) finalAngle = 180 - z;
         else if (dx < 0 && dy < 0) finalAngle = -180 + z;
         else if (dx >= 0 && dy < 0) finalAngle = -z;
 
-        return {
-            magnitude: magnitude,
-            angle: finalAngle,
-            steps: steps
-        };
+        return { magnitude, angle: finalAngle, steps };
+    }
+
+    /**
+     * Rotation Mode: Compute dx, dy from magnitude and angle
+     */
+    rotate(magnitude, targetAngle, iterations = 10) {
+        let x = magnitude * this.K; 
+        let y = 0;
+        let z = targetAngle;
+        
+        // Handle angles outside [-90, 90] with pre-rotation
+        if (z > 90) {
+            z -= 180;
+            x = -x;
+            y = -y;
+        } else if (z < -90) {
+            z += 180;
+            x = -x;
+            y = -y;
+        }
+
+        const steps = [];
+        for (let i = 0; i < iterations; i++) {
+            let x_new, y_new;
+            const shiftY = y / Math.pow(2, i);
+            const shiftX = x / Math.pow(2, i);
+
+            if (z >= 0) {
+                x_new = x - shiftY;
+                y_new = y + shiftX;
+                z -= this.atanLUT[i] || 0;
+            } else {
+                x_new = x + shiftY;
+                y_new = y - shiftX;
+                z += this.atanLUT[i] || 0;
+            }
+            x = x_new; y = y_new;
+            steps.push({ iter: i, x: x.toFixed(2), y: y.toFixed(2), angle: z.toFixed(2) });
+        }
+
+        return { dx: x, dy: y, steps };
     }
 }
 
