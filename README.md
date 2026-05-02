@@ -90,7 +90,6 @@ In 1–2 paragraphs, explain:
 
 **Response:**  
 `This project presents a hardware-accelerated robotic navigation system implemented on FPGA using the CORDIC (Coordinate Rotation Digital Computer) algorithm. The system computes direction and distance between a robot’s current position and a target location in real time using only shift-add operations, eliminating the need for multipliers and floating-point computation.
-
 A complementary software simulation environment was developed using JavaScript to validate the algorithmic behavior and visualize navigation on a Cartesian grid. The system continuously calculates displacement, converts it into polar coordinates using CORDIC, and updates the robot’s position iteratively until the destination is reached. This approach demonstrates how computationally intensive mathematical operations can be efficiently mapped to hardware for deterministic and low-latency performance.`
 
 ---
@@ -103,7 +102,7 @@ List what inspired the project.
 
 | Source Type | Title / Link                                                        | What Inspired You                                                                         |
 | ----------- | ------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
-| `[Video]`   | `https://www.instagram.com/reel/DW4CT7WCDry/?igsh=cXg3dzAxYmdncDBo` | `How projection mapping can be used to create interactive digital + physical experiences` |
+| `[Research Paper]`   | `https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7030598&tag=1` | `How the CORDIC algorithm can be efficiently implemented on FPGA to perform real-time robotic navigation computations using hardware-friendly operations.` |
 |             |                                                                     |                                                                                           |
 |             |                                                                     |                                                                                           |
 
@@ -115,11 +114,9 @@ What makes your project original?
 Unlike conventional robotic navigation systems that rely on CPUs or microcontrollers for trigonometric computations, this project offloads all critical mathematical operations to FPGA hardware using the CORDIC algorithm.
 
 Additionally, the project integrates:
-
-A hardware-software co-design approach
-A real-time visualization interface
-Error comparison between software math and FPGA-equivalent computation
-
+- A hardware-software co-design approach
+- A real-time visualization interface
+- Error comparison between software math and FPGA-equivalent computation
 This combination of FPGA acceleration with interactive simulation makes the system both technically efficient and conceptually demonstrative.
 
 ---
@@ -131,12 +128,9 @@ This combination of FPGA acceleration with interactive simulation makes the syst
 Describe exactly how a user will use the project.Make it a story
 **Response:**  
 The user interacts with the system through a simulation interface. They input the current position (x,y) and displacement (dx,dy). Once the simulation is triggered, the system visually plots the current and target positions on a grid.
-
 Internally, the system computes direction and distance using both:
-
-~standard mathematical functions (software), and
-~CORDIC-based iterative computation (hardware equivalent)
-
+- standard mathematical functions (software), and
+- CORDIC-based iterative computation (hardware equivalent)
 The computed path is displayed as a vector, and the robot’s movement is simulated step-by-step. The interface also shows numerical outputs such as distance, angle, and error metrics, allowing the user to understand both the navigation process and the accuracy of the CORDIC algorithm.
                                                   |
 
@@ -148,7 +142,7 @@ The computed path is displayed as a vector, and the robot’s movement is simula
 
 ## 4.1 Definition of “Usable”
 
-
+A “usable” version of this project is one in which the system successfully accepts coordinate inputs, computes displacement using the CORDIC algorithm, and produces accurate direction (angle) and distance outputs, along with a clear visual representation of the navigation on the grid, allowing the user to understand and verify the computation process.
 
 ## 4.2 Minimum Usable Version
 
@@ -156,21 +150,21 @@ What is the smallest version of this project that still delivers the core experi
 
 **Response:**  
 The minimum usable version of the project includes:
-~Input of current and target coordinates
-~Computation of displacement vector (dx, dy)
-~CORDIC-based calculation of angle and distance
-~Basic visualization of movement on a grid
-~Display of numerical outputs
+- Input of current and target coordinates
+- Computation of displacement vector (dx, dy)
+- CORDIC-based calculation of angle and distance
+- Basic visualization of movement on a grid
+- Display of numerical outputs
 This version demonstrates the core concept of FPGA-based navigation computation.
 
 ## 4.3 Stretch Features
 
 What features are nice to have but not essential?
 
-~Closed-loop navigation system
-~Sensor integration (IMU / encoders)
-~Obstacle detection and avoidance
-~Autonomous path planning
+- Closed-loop navigation system
+- Sensor integration (IMU / encoders)
+- Obstacle detection and avoidance
+- Autonomous path planning
 
 ---
 
@@ -182,7 +176,7 @@ Check all that apply.
 
 - [x] Electronics-based
 
-- [ ] Mechanical
+- [x] Mechanical
 
 - [ ] Sensor-based
 
@@ -196,13 +190,13 @@ Check all that apply.
 
 - [x] Screen/UI-based
 
-- [x] Fabricated structure
+- [ ] Fabricated structure
 
 - [ ] Game logic based
 
 - [ ] Installation
 
-- [x] Other:
+- [ ] Other:
 
 ## 5.2 High-Level System Description
 
@@ -218,7 +212,7 @@ Include:
 
 **Response:**  
 - Input      - Robot’s current position and a target position
-- Processing - A displacement vector is generated using subtractor logic. This vector is then processed using a CORDIC module configured                 in vectoring mode to compute distance and direction.The computed angle is further used in a second CORDIC module (rotation                mode) to generate cosine and sine values. These values are scaled using a velocity factor and added to the current                        position to generate the next position.
+- Processing - A displacement vector is generated using subtractor logic. This vector is then processed using a CORDIC module configured                          in vectoring mode to compute distance and direction.The computed angle is further used in a second CORDIC module (rotation                         mode) to generate cosine and sine values. These values are scaled using a velocity factor and added to the current                                 position to generate the next position.
 - Output     - This process is repeated iteratively until the robot reaches the target.
 - Physical
   structure  - The system is implemented in FPGA hardware.
@@ -271,7 +265,7 @@ Add a sketch with labels showing:
 `[Upload image and link here]`
 <img width="1600" height="1200" alt="image" src="https://github.com/user-attachments/assets/95637f31-b4e7-4427-a9e1-4b63fbeb0ac5" />
 
-## 6.3 Approximate Dimensions
+## 6.3 Approximate Dimensions  (NOT APPLICABLE because we dont have a physical product, the algorithm is implemented on a boolean board)
 
 | Dimension        | Value   |
 | ---------------- | ------- |
@@ -288,24 +282,27 @@ Add a sketch with labels showing:
 
 | Component                 | Quantity | Purpose                               |
 | ------------------------- | --------:| ------------------------------------- |
-| `[Raspi/FPGA]`                 | `1`      | `[Main controller]`                   |
-| `[L298N Motor Driver]`    | `1`      | `[Control Motors]`                    |
-| `[BO Motors]`             | `2`      | `[Rotate wheels]`                     |
-| `[Buck Converter]`        | `1`      | `[Power ESP32]`                       |
-| `[Li Ion Battery Pack]`   | `2`      | `[Power]`                             |
-| `[Projector]`             | `1`      | `[Display obstacles]`                 |
-| `Camera (Webcam / Phone)` | `1`      | `[Tracks car position using markers]` |
+| `[FPGA]`                 | `1`      | `[Main controller]`                   |
+
 
 ## 7.2 Wiring Plan
 
 Describe the main electrical connections.
 
 **Response:**  
-`The FPGA (Xilinx-based platform) acts as the central processing unit. The system includes two CORDIC IP cores connected via AXI-Stream interfaces. Input coordinates are provided through registers or VIO (Virtual Input Output) for testing purposes.
+`The FPGA (Xilinx-based development board) serves as the central processing unit of the system. A clock signal generated using the clock wizard module is distributed to all synchronous blocks to ensure coordinated operation.
 
-The subtractor modules compute dx and dy, which are fed into the first CORDIC block configured in vectoring mode. The output angle is passed to the second CORDIC block configured in rotation mode.
+Input coordinate values are provided through a Virtual Input/Output (VIO) interface, allowing real-time testing and modification of inputs such as current and target positions. These inputs are routed to two subtractor blocks, which compute the displacement components dx and dy.
 
-The outputs (cosθ, sinθ) are scaled and used to update position registers. All modules are synchronized using a system clock generated by a clock wizard. Proper valid/ready handshaking ensures correct data flow across pipeline stages..`
+The outputs of the X and Y subtractors are connected to a concatenation block (xlconcat), which combines them into a single data stream compatible with the AXI-Stream interface of the CORDIC IP core.
+
+A single CORDIC IP core is used, configured in Translate (Vectoring) mode, which converts the Cartesian inputs (dx,dy) into polar outputs — namely, magnitude (distance) and phase (angle). This eliminates the need for a second CORDIC block.
+
+The CORDIC outputs are passed through slice blocks to separate and extract the distance and angle values. These outputs are then routed back to the VIO module for observation and verification.
+
+All data transfers between blocks follow AXI-Stream protocol with valid/ready handshaking to ensure proper synchronization and continuous data flow through the pipeline.
+
+The design follows a linear dataflow architecture with minimal control complexity, making it efficient and well-suited for FPGA-based implementation of the CORDIC algorithm.`
 
 ## 7.3 Circuit Diagram/architecture diagram
 
@@ -318,12 +315,14 @@ Insert a hand-drawn or software-made circuit diagram.
 
 # 7.4. Power Plan
 
-| Question         | Response                                                                                                                                          |
-| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Power source     | `Battery (Li-ion pack)`                                                                                                                           |
-| Voltage required | `~6–8.4V for motors (via driver), stepped down to 5V for ESP32 (buck converter)`                                                                  |
-| Current concerns | `Motors can draw high current under load, which may cause voltage drops affecting ESP32 and WiFi stability`                                       |
-| Safety concerns  | `Avoid over-discharging Li-ion batteries, ensure proper voltage regulation, prevent short circuits, and secure wiring to avoid loose connections` |
+| Question               | Response                                                                 |
+|-----------------------|--------------------------------------------------------------------------|
+| Power source          | `External DC supply via FPGA development board (USB or adapter)`         |
+| Voltage required      | `Typically 5V input to FPGA board, internally regulated (3.3V, 1.8V)`    |
+| Current concerns      | `Stable current required for FPGA logic switching and CORDIC IP operation` |
+| Safety concerns       | `Avoid over-voltage, ensure proper grounding, prevent short circuits`     |
+| Power regulation      | `On-board regulators provide stable voltage to FPGA fabric and IP cores` |
+| FPGA-specific concern | `Power stability is critical to avoid timing errors in CORDIC computation` |
 
 ---
 
@@ -354,21 +353,50 @@ Include:
 
 **Response:**  
 `
+- **Startup behavior:**  
+  The FPGA initializes the system clock using the clock wizard and configures all internal modules including subtractor blocks, concatenation logic, and the CORDIC IP core. The VIO interface is enabled for real-time input and output monitoring.
 
-- **Sample Startup behavior:**  
-  The Raspi/FPGA initializes motor pins, PWM control, and starts a WiFi access point with a web server. The laptop initializes camera input, tracking system, and projection mapping.
 - **Input handling:**  
-  Movement commands are received from the laptop (pygame sends http requests)
+  The system accepts coordinate inputs through the VIO module:
+  
+  (x1, y1), (x2, y2)
+
 - **Sensor reading:**  
-  The camera continuously captures frames, and OpenCV detects ArUco markers to determine the car’s position and orientation.
+  Not applicable, as the system operates on user-provided inputs via VIO.
+
+- **Computation logic:**  
+  The subtractor blocks compute displacement:
+
+  dx = x2 - x1  
+  dy = y2 - y1  
+
+  These values are fed into the CORDIC IP core (Translate / Vectoring mode), which computes:
+
+  r = sqrt(dx² + dy²)  
+  θ = atan(dy / dx)  
+
+  Internally, the CORDIC algorithm performs iterative shift-add operations:
+
+  x(i+1) = x(i) ± y(i) / 2^i  
+  y(i+1) = y(i) ∓ x(i) / 2^i  
+  z(i+1) = z(i) ± atan(2^(-i))  
+
 - **Decision logic:**  
-  The system maps the car’s position into a virtual coordinate system and checks for nearby obstacles or collisions. If movement is valid, the command is allowed; if not, it is blocked or replaced with a feedback action (like a slight shake).
+  The system performs direct computation without branching, focusing on accurate coordinate transformation.
+
 - **Output behavior:**  
-  The ESP32 drives the motors using PWM signals to control speed and direction. The projector displays the updated game environment, including obstacles, targets, and feedback visuals.
+  The outputs:
+
+  Distance = r  
+  Angle = θ  
+
+  are extracted using slice blocks and displayed through the VIO interface.
+
 - **Communication logic:**  
-  The laptop sends HTTP requests (e.g., `/forward`, `/left`) to the ESP32 over WiFi. The ESP32 parses these commands and executes motor actions.
+  AXI-Stream interfaces with valid/ready handshaking ensure synchronized data transfer between modules.
+
 - **Reset behavior:**  
-  If no command is received within a short timeout, the ESP32 stops the motors. The game resets when a level is completed or restarted.`
+  Upon reset, all registers and intermediate states are cleared, and the system returns to an idle state ready for new inputs.`
 
 ## 8.3 Code Flowchart
 
@@ -398,21 +426,18 @@ Suggested sequence:
 
 | Item                             | Quantity | In Kit? | Need to Buy? | Estimated Cost | Material / Spec               | Why This Choice?          |
 | -------------------------------- | --------:| ------- | ------------ | --------------:| ----------------------------- | ------------------------- |
-| `[RASPI]`                        | `1`      | `Yes`   | `No`         | `0`            | `38 Pin ESP32`                | `[To control components]` |
-| `[Motor Driver]`                 | `[1]`    | `[Yes]` | `[No]`       | `0`            | `[LN296]`                     | `[To drive both motors]`  |
-| `[DC Motors and wheel]`          | `[2]`    | `[No]`  | `[Yes]`      | `[150]`        | `[BO Motors and 6 cm wheels]` | `[high torque motors]`    |
-| `[Buck Converter]`               | `[1]`    | `[No]`  | `[Yes]`      | `[75]`         |                               |                           |
-| `[Li-ion batteries with holder]` | `[1]`    | `[No]`  | `[Yes]`      | `[200]`        |                               |                           |
+| `[FPGA]`                        | `1`      | `Yes`   | `No`         | `0`            | `Spartan7`                | `[To implement algorithm]` |
+
 
 ## 9.2 Material Justification
 
 Explain why you selected your main materials and components.
 
 **Response:**  
-`DC motors (BO motors) were chosen instead of servos or steppers because the system requires continuous rotation for movement rather than precise angular control (Previously, we were considering using steppers as we were planning on tracking movement on the ESP using its relative position from an origin, but since we're using a camera now, this is not required). A motor driver (L298N) was used to allow bidirectional control and speed variation using PWM.`
+`An FPGA (Xilinx-based development board) was selected as the main component due to its ability to perform high-speed parallel computation, which is essential for efficiently implementing the CORDIC algorithm using shift-add operations instead of multipliers.`
 
 
-## 9.3 Items You chose
+## 9.3 Items You chose( NOT APPICABLE)
 
 | Item                 | Why Needed               | Purchase Link | Latest Safe Date to Procure | Status       |
 | -------------------- | ------------------------ | ------------- | --------------------------- | ------------ |
@@ -424,19 +449,19 @@ Explain why you selected your main materials and components.
 
 | Budget Item           | Estimated Cost              |
 | --------------------- | ---------------------------:|
-| Electronics           | `[400]`                     |
-| Mechanical parts      | `[200]`                     |
-| Fabrication materials | `[0 (Available on campus)]` |
+| Electronics           | `[0 (Available on campus)]`                     |
+| Mechanical parts      | `[0]`                       |
+| Fabrication materials | `[0]`                       |
 | Purchased extras      | `[0]`                       |
-| Contingency           | `[300]`                     |
-| **Total**             | `[900]`                     |
+| Contingency           | `[0]`                       |
+| **Total**             | `[0]`                       |
 
 ## 9.5 Budget Reflection
 
 If your cost is too high, what can be simplified, removed, substituted, or shared?
 
 **Response:**  
-
+NOT APPLICABLE as our budget is negligible.
 ---
 
 # 10. Planning the Work
@@ -454,25 +479,36 @@ Include:
 - how documentation will be maintained.
 
 **Response:**  
+ `The team followed a structured and role-based approach to ensure efficient progress within the limited time frame. Responsibilities were divided based on individual strengths:
+- Vijay and  Parth: FPGA design and CORDIC implementation
+- Nafeesa: Documentation, GitHub management, and Software support
+- Kushith: Software simulation and visualization
 
+Decisions were made collaboratively after brief discussions, especially for design choices affecting both hardware and software. Progress was reviewed periodically by syncing outputs from FPGA logic and simulation.
+If a task was delayed, responsibilities were redistributed temporarily to maintain overall progress. Documentation was updated continuously on GitHub to ensure transparency and track development.` 
 
 ## 10.2 Task Breakdown
 
-| Task ID | Task                    | Owner    | Estimated Hours | Deadline     | Dependency | Status |
-| ------- | ----------------------- | -------- | ---------------:| ------------ | ---------- | ------ |
-| T1      | `[Finalize concept]`    | `[Both]` | `2`             | `1st April`  | `None`     | `Done` |
+| Task ID | Task                        | Owner       | Estimated Hours | Deadline | Dependency | Status |
+| ------- | --------------------------- | ----------- | --------------- | -------- | ---------- | ------ |
+| T1      | Understand CORDIC algorithm | All         | 1               | Day 1    | None       | Done   |
+| T2      | FPGA block design           | Vijay, Parth| 2               | Day 1    | T1         | Done   |
+| T3      | CORDIC implementation       | Vijay, Parth| 3               | Day 1    | T2         | Done   |
+| T4      | Software simulation (JS)    | Kushith     | 6               | Day 1    | T1         | Done   |
+| T5      | Integration + validation    | All         | 4               | Day 1    | T3, T4     | Done   |
+| T6      | Documentation & GitHub      | Nafeesa     | 5               | Day 1    | All        | Done   |
 
 
 ## 10.3 Responsibility Split
 
-| Area                 | Main Owner     | Support Owner |
-| -------------------- | ----------     | ------------- |
-| Concept              | `[Mrugendra]`  | `[Jyoti]`     |
-| Electronics          | `[]`           | `[]`          |
-| Coding               | `[]`           | `[]`          |
-| Mechanical build     | `[]`           | `[]`          |
-| Testing              | `[]`           | `[]`          |
-| Documentation        | `[]`           | `[]`          |
+| Area                | Main Owner | Support Owner |
+| ------------------- | ---------- | ------------- |
+| Concept             | Vijay      | All           |
+| Electronics (FPGA)  | Vijay      | Parth         |
+| Coding (FPGA)       | Parth      | Vijay         |
+| Software Simulation | Kushith    | Nafeesa       |
+| Testing             | Nafeesa    | All           |
+| Documentation       | Nafeesa    | All           |
 
 ---
 
@@ -524,12 +560,12 @@ Expected outcomes:
 
 ## 12.2  Update Log
 
-| Days   | Planned Goal   | What Actually Happened | What Changed   | Next Steps     |
-| ------ | -------------- | ---------------------- | -------------- | -------------- |
-| Day 1 | `[Write here]` | `[Write here]`         | `[Write here]` | `[Write here]` |
-| Day 2 | `[Write here]` | `[Write here]`         | `[Write here]` | `[Write here]` |
-| Day 3 | `[Write here]` | `[Write here]`         | `[Write here]` | `[Write here]` |
-| Day 4 | `[Write here]` | `[Write here]`         | `[Write here]` | `[Write here]` |
+| Day   | Planned Goal                  | What Actually Happened                     | What Changed                   | Next Steps           |
+| ----- | ----------------------------- | ------------------------------------------ | ------------------------------ | -------------------- |
+| Bi hour 1 | Understand CORDIC + design    | Algorithm studied and architecture decided | Added simulation idea          | Start FPGA + JS work |
+| Bi hour 2 | FPGA implementation           | Basic CORDIC working in simulation         | Needed more iterations tuning  | Improve accuracy     |
+| Bi hour 3 | Simulation + integration      | JS simulation completed                    | Added error comparison feature | Validate results     |
+| Bi hour 4 | Final testing + documentation | Outputs verified and README completed      | Improved visualization clarity | Final submission reaady     |
 
 ---
 
@@ -537,9 +573,12 @@ Expected outcomes:
 
 ## 13.1 Risk Register
 
-| Risk                                                            | Type         | Likelihood | Impact   | Mitigation Plan                                                                       | Owner                |
-| --------------------------------------------------------------- | ------------ | ---------- | -------- | ------------------------------------------------------------------------------------- | -------------------- |
-| WiFi connection between laptop and ESP32 becomes unstable       | `Technical`  | `Medium`   | `High`   | Keep ESP32 close, ensure stable power supply, reduce network load, add fail-safe stop | `[Gopal]`           |
+| Risk                            | Type       | Likelihood | Impact | Mitigation Plan                |
+| ------------------------------- | ---------- | ---------- | ------ | ------------------------------ |
+| Incorrect CORDIC implementation | Technical  | Medium     | High   | Validate with software outputs |
+| Fixed-point precision errors    | Technical  | Medium     | Medium | Tune iterations and scaling    |
+| FPGA integration issues         | Technical  | Low        | High   | Test modules independently     |
+| Time constraints                | Management | Medium     | Medium | Divide tasks efficiently       |
 
 
 ## 13.2 Biggest Unknown Right Now
@@ -547,7 +586,7 @@ Expected outcomes:
 What is the single biggest uncertainty in your project at this stage?
 
 **Response:**  
-
+`The biggest uncertainty was ensuring that the iterative CORDIC algorithm produces sufficiently accurate results within a limited number of iterations while maintaining hardware efficiency. Balancing precision and performance required careful tuning and validation.`
 
 ---
 
@@ -555,29 +594,36 @@ What is the single biggest uncertainty in your project at this stage?
 
 ## 14.1 Technical Testing Plan
 
-| What Needs Testing     | How You Will Test It                                                                 | Success Condition                                                                                    |
-| ---------------------- | ------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------- |
-| `[Wifi connection]`    | `[Check if motor spins via app button]`                                              | `[Both motors accurately respond to wifi signals]`                                                   |
-                       |
+| What Needs Testing     | How You Will Test It              | Success Condition             |
+| ---------------------- | --------------------------------- | ----------------------------- |
+| CORDIC accuracy        | Compare with Math.hypot & atan2   | Minimal error between outputs |
+| Iterative convergence  | Run multiple input values         | Output stabilizes correctly   |
+| FPGA logic correctness | Test using VIO inputs             | Expected outputs observed     |
+| Simulation consistency | Compare JS vs theoretical results | Matching behavior             |
+
 ## 14.2 Testing and Debugging Log
 
-| Date          | Problem Found                         | Type         | What You Tried                                | Result               | Next Action                                    |
-| ------------- | ------------------------------------- | ------------ | --------------------------------------------- | -------------------- | ---------------------------------------------- |
-| `18th April`  | `Car not balancing properly`          | `Mechanical` | `Add low-friction caster support to one side` | `Worked`             | `improve caster structure`                     |
+| Date  | Problem Found              | Type      | What You Tried          | Result   | Next Action         |
+| ----- | -------------------------- | --------- | ----------------------- | -------- | ------------------- |
+| Bi hour 2| Incorrect angle output     | Technical | Checked iteration logic | Fixed    | Validate more cases |
+| Bi hour 3 | Slight distance mismatch   | Precision | Increased iterations    | Improved | Optimize scaling    |
+| Bi hour 3 | Visualization misalignment | UI        | Adjusted grid mapping   | Fixed    | Final testing       |
+
 
 
 ## 14.3 Playtesting Notes
 
-| Tester      | What They Did                        | What Confused Them                    | What They Enjoyed                         | What You Will Change                          |
-| ----------- | ------------------------------------ | ------------------------------------- | ----------------------------------------- | --------------------------------------------- |
-| `Gopal` | `Tried navigating through obstacles` | `Some obstacles ewren't clear enough` | `Liked projection + real car interaction` | `Add a slight red highlight around obstacles` |
+| Tester | What They Did           | What Confused Them      | What They Enjoyed          | What You Will Change      |
+| ------ | ----------------------- | ----------------------- | -------------------------- | ------------------------- |
+| Nafeesa | Tested different inputs | Iteration logs unclear  | Visual path representation | Improve iteration display |
+| Kushith | Checked accuracy        | Minor value differences | Error comparison feature   | Add explanation notes     |
 
 
 ---
 
 # 15. Build Documentation
 
-## 15.1 Fabrication Process(if any)
+## 15.1 Fabrication Process(if any) (NOT APPLICABLE)
 
 Describe how the project was physically made.
 
@@ -633,13 +679,24 @@ Suggested images:
 Describe the final version of your project.
 
 **Response:**  
+`The final system successfully demonstrates FPGA-based robotic navigation using the CORDIC algorithm. The design computes direction and distance in real time and updates position iteratively using hardware-efficient operations.
+The accompanying software simulation provides a clear visualization of the navigation process and validates the accuracy of the CORDIC algorithm. The results show minimal deviation from standard mathematical computations, proving the effectiveness of the approach.`
 
 
 ## 17.2 What Works Well
-
+`1)Accurate CORDIC computation
+2)Smooth visualization of navigation
+3)Clear comparison between software and hardware logic
+4)Efficient FPGA-friendly design`
 
 
 ## 17.3 What Still Needs Improvement
+
+`1)Full hardware deployment with physical robot
+2)Better fixed-point precision tuning
+3)Pipeline optimization
+4)Real sensor integration`
+
 
 
 ## 17.4 What Changed From the Original Plan
@@ -647,6 +704,8 @@ Describe the final version of your project.
 How did the project change from the initial idea?
 
 **Response:**  
+`The project was originally defined around implementing the CORDIC algorithm on FPGA for computing trigonometric functions such as angle and magnitude from Cartesian inputs. As development progressed, the scope was refined to place stronger emphasis on system-level understanding and validation of the algorithm rather than just isolated implementation.
+To achieve this, a software simulation layer was introduced alongside the hardware design. This allowed step-by-step visualization of CORDIC iterations, comparison with standard mathematical functions, and detailed error analysis. The addition of this validation framework significantly improved debugging, interpretation of results, and confidence in the FPGA-oriented design.`
 
 
 ---
@@ -660,6 +719,10 @@ What slowed you down?
 How well did you manage time, tasks, and responsibilities?
 
 **Response:**  
+`The team worked well in terms of dividing responsibilities between hardware understanding, algorithm implementation, and documentation. Communication was consistent, which helped in aligning both the FPGA design and the software simulation aspects of the project.
+The main challenges were related to understanding the CORDIC algorithm deeply and mapping it correctly to both hardware logic and software simulation. Debugging iterative computations and ensuring consistency between expected and observed outputs also required additional time.
+Overall, time and tasks were managed reasonably well. Initial planning helped in covering core objectives early, and later efforts were focused on refinement, testing, and improving clarity of the implementation.`
+
 
 
 ## 18.2 Technical Reflection
@@ -673,6 +736,12 @@ What did you learn about:
 - integration?
 
 **Response:**  
+`This project provided deep insights into:
+1)FPGA-based system design
+2)Fixed-point arithmetic
+3)Hardware implementation of mathematical algorithms
+4)Trade-offs between accuracy and resource usage
+5)Integration of hardware and software systems`
 
 
 ## 18.3 Design Reflection
@@ -687,6 +756,9 @@ What did you learn about:
 - iteration?
 
 **Response:**  
+`This project helped in understanding the importance of designing systems with clarity and purpose. Breaking down a complex algorithm like CORDIC into smaller logical stages made the implementation more manageable and easier to debug.
+From a clarity perspective, visualizing outputs through simulation significantly improved understanding of how the algorithm behaves iteratively. It also highlighted the importance of representing technical concepts in an interpretable way.
+In terms of interaction, even though the system is primarily computational, the addition of a visual interface made the project more intuitive and easier to analyze.`
 
 
 ## 18.4 If You Had One More hour
@@ -695,7 +767,7 @@ What would you improve next?
 
 **Response:**  
 
-` `
+`The process reinforced that good design is iterative. Initial approaches were refined multiple times to improve accuracy, structure, and usability. Small improvements in representation and logic led to a much clearer and more reliable final system. `
 
 ---
 
