@@ -672,21 +672,26 @@ Suggested images:
 - mechanism test,
 - app screenshot,
 - final build.
-- <p align="center">
+- The first block design we made
+ <p align="center">
   <img src="images/initial_block_design.jpeg" width="700"/>
-</p> The first block design we made
-- <p align="center">
+</p> 
+-First software trial
+<p align="center">
   <img src="images/initial_simulation_demo.jpeg" width="700"/>
-</p> First software trial
-- <p align="center">
+</p> 
+- The subractor block we made to get started
+<p align="center">
   <img src="images/subtractor design.jpeg" width="700"/>
-</p> The subractor block we made to get started
-- <p align="center">
+</p>
+-The subractor block we made to get started
+<p align="center">
   <img src="images/subtractor design.jpeg" width="700"/>
-</p> The subractor block we made to get started
-- <p align="center">
+</p> 
+-The subractor block virtual input output table
+<p align="center">
   <img src="images/subtractor i_o.jpeg" width="700"/>
-</p> The subractor block virtual input output table
+</p> 
 
 # 17. Final Outcome
 
@@ -697,6 +702,29 @@ Describe the final version of your project.
 **Response:**  
 `The final system successfully demonstrates FPGA-based robotic navigation using the CORDIC algorithm. The design computes direction and distance in real time and updates position iteratively using hardware-efficient operations.
 The accompanying software simulation provides a clear visualization of the navigation process and validates the accuracy of the CORDIC algorithm. The results show minimal deviation from standard mathematical computations, proving the effectiveness of the approach.`
+
+-The current virtual input output table
+<p align="center">
+  <img src="images/FINAL_VIO_TABLE.jpeg" width="700"/>
+</p> 
+
+-The current block design
+<p align="center">
+  <img src="images/FINAL_BLOCK DESIGN_FPGA.jpeg" width="700"/>
+</p> 
+
+-The output dashboard
+<p align="center">
+  <img src="images/FINAL_OUTPUT_DASHBOARD.jpeg" width="700"/>
+</p> 
+
+-The software simulation
+<p align="center">
+  <img src="images/FINAL_SIMULATION.jpeg" width="700"/>
+</p> 
+
+
+
 
 
 ## 17.2 What Works Well
